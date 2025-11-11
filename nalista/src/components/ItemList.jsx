@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getApi } from "../api/api";
 
-export default function ItemList({ list, onBack }) {
+export default function ItemList({ list }) {
   const [items, setItems] = useState([]);
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -42,11 +42,8 @@ export default function ItemList({ list, onBack }) {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="flex justify-between items-center mb-4">
+      <div className="pt-12 mb-4">
         <h2 className="text-2xl font-bold text-gray-800">{list.name}</h2>
-        <button onClick={onBack} className="text-purple-600 underline">
-          Voltar
-        </button>
       </div>
 
       <div className="bg-white p-6 rounded-2xl shadow-md">
