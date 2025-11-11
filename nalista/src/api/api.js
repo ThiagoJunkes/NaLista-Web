@@ -1,5 +1,6 @@
 import axios from 'axios';
 
-export const api = axios.create({
-  baseURL: 'http://localhost:3000', // ajuste se o backend usar outra porta
-});
+export function getApi() {
+  const baseURL = localStorage.getItem("backendUrl") || "http://localhost:3000";
+  return axios.create({ baseURL });
+}

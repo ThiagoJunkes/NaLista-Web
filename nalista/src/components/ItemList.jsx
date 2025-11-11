@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { api } from "../api/api";
+import { getApi } from "../api/api";
 
 export default function ItemList({ list, onBack }) {
   const [items, setItems] = useState([]);
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(1);
 
+  const api = getApi();
   // Busca itens da lista
   useEffect(() => {
     api.get(`/lists/${list.id}`)

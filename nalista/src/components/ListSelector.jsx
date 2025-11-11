@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { api } from "../api/api";
+import { getApi } from "../api/api";
 
 export default function ListSelector({ onSelectList }) {
   const [lists, setLists] = useState([]);
   const [newListName, setNewListName] = useState("");
 
   // Busca todas as listas
+  const api = getApi();
   useEffect(() => {
     api.get("/lists")
       .then(res => setLists(res.data))
