@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getApi } from "../api/api";
+import { toast } from "react-hot-toast";
 
 export default function ItemList({ list }) {
   const [items, setItems] = useState([]);
@@ -11,7 +12,7 @@ export default function ItemList({ list }) {
   useEffect(() => {
     api.get(`/lists/${list.id}`)
       .then(res => setItems(res.data))
-      .catch(() => alert("Erro ao carregar itens"));
+      .catch(() => toast.error("Erro ao carregar itens"));
   }, [list.id]);
 
   async function addItem() {
@@ -22,7 +23,7 @@ export default function ItemList({ list }) {
       setName("");
       setQuantity(1);
     } catch {
-      alert("Erro ao adicionar item");
+      toast.error("Erro ao adicionar item");
     }
   }
 

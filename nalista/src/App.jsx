@@ -4,6 +4,7 @@ import ListSelector from "./components/ListSelector";
 import ItemList from "./components/ItemList";
 import ConfigPage from "./pages/ConfigPage";
 import { getApi } from "./api/api";
+import { Toaster, toast } from "react-hot-toast";
 
 export function applyTheme() {
   const theme = localStorage.getItem("theme");
@@ -21,6 +22,7 @@ export default function App() {
   const [selectedList, setSelectedList] = useState(null);
   const [showConfig, setShowConfig] = useState(false);
   const [backendHealthy, setBackendHealthy] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [lists, setLists] = useState([]);
 
   useEffect(applyTheme, []);
@@ -34,11 +36,13 @@ export default function App() {
           setBackendHealthy(true);
         } else {
           setShowConfig(true);
-          alert("A URL do backend parece estar incorreta. Verifique as configurações.");
+          toast.error("A URL do backend parece estar incorreta. Verifique as configurações.");
         }
       } catch (error) {
         setShowConfig(true);
-        alert("Não foi possível conectar ao backend. Verifique a URL nas configurações.");
+        toast.error("Não foi possível conectar ao backend. Verifique a URL nas configurações.");
+      } finally {
+        setIsLoading(false);
       }
     };
     checkBackendHealth();
@@ -50,16 +54,33 @@ export default function App() {
       const api = getApi();
       api.get("/lists")
         .then(res => setLists(res.data))
-        .catch(() => alert("Erro ao carregar listas"));
+        .catch(() => toast.error("Erro ao carregar listas"));
     }
   }, [backendHealthy]);
 
   if (showConfig) {
-    return <ConfigPage onBack={() => setShowConfig(false)} onThemeChange={applyTheme} />;
+    return (
+      <>
+        <Toaster position="top-center" reverseOrder={false} />
+        <ConfigPage onBack={() => setShowConfig(false)} onThemeChange={applyTheme} />
+      </>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="relative min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 flex items-center justify-center">
+        <Toaster position="top-center" reverseOrder={false} />
+        <div className="text-xl font-semibold">
+          Verificando conexão com o servidor...
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="relative min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+      <Toaster position="top-center" reverseOrder={false} />
       {/* Botões do topo */}
       <div className="absolute top-4 right-4 flex items-center gap-4">
         {selectedList && (

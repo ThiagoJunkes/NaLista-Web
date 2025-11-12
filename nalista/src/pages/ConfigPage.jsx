@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 export default function ConfigPage({ onBack, onThemeChange }) {
   const [backendUrl, setBackendUrl] = useState("");
@@ -16,7 +17,10 @@ export default function ConfigPage({ onBack, onThemeChange }) {
 
   const handleSave = () => {
     localStorage.setItem("backendUrl", backendUrl);
-    window.location.reload(); // Recarrega a página para refazer o health check e carregar os dados.
+    toast.success("Configurações salvas! Recarregando...");
+    // Adiciona um pequeno atraso para que o usuário possa ver o toast antes do reload.
+    // A tela de "Verificando conexão..." vai aparecer logo após o reload.
+    setTimeout(() => window.location.reload(), 1000);
   };
 
   const toggleTheme = () => {

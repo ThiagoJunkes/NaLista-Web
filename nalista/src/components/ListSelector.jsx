@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getApi } from "../api/api";
+import { toast } from "react-hot-toast";
 
 export default function ListSelector({ initialLists, onSetLists, onSelectList }) {
   const [newListName, setNewListName] = useState("");
@@ -8,7 +9,7 @@ export default function ListSelector({ initialLists, onSetLists, onSelectList })
 
   // Cria nova lista
   async function createList() {
-    if (!newListName.trim()) return alert("Digite um nome para a lista!");
+    if (!newListName.trim()) return toast.error("Digite um nome para a lista!");
     try {
       const api = getApi();
       const res = await api.post("/lists", { name: newListName });
@@ -16,7 +17,7 @@ export default function ListSelector({ initialLists, onSetLists, onSelectList })
       onSetLists(prev => [...prev, res.data]);
       setNewListName("");
     } catch (err) {
-      alert("Erro ao criar lista");
+      toast.error("Erro ao criar lista");
     }
   }
 
