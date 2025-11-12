@@ -41,30 +41,30 @@ export default function ItemList({ list }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
       <div className="pt-12 mb-4">
-        <h2 className="text-2xl font-bold text-gray-800">{list.name}</h2>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">{list.name}</h2>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl shadow-md">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md">
         <div className="flex gap-2 mb-4">
           <input
             type="text"
             placeholder="Novo item..."
             value={name}
             onChange={e => setName(e.target.value)}
-            className="flex-1 border rounded-lg px-3 py-2"
+            className="flex-1 border dark:border-gray-600 bg-white dark:bg-gray-700 rounded-lg px-3 py-2 text-gray-800 dark:text-gray-200"
           />
           <input
             type="number"
             value={quantity}
             min="1"
             onChange={e => setQuantity(Number(e.target.value))}
-            className="w-20 border rounded-lg px-2 py-2 text-center"
+            className="w-20 border dark:border-gray-600 bg-white dark:bg-gray-700 rounded-lg px-2 py-2 text-center text-gray-800 dark:text-gray-200"
           />
           <button
             onClick={addItem}
-            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700"
+            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800"
           >
             Adicionar
           </button>
@@ -74,17 +74,17 @@ export default function ItemList({ list }) {
           {items.map(item => (
             <li
               key={item.id}
-              className="flex justify-between items-center bg-gray-100 p-3 rounded-lg"
+              className="flex justify-between items-center bg-gray-100 dark:bg-gray-700 p-3 rounded-lg"
             >
               <div
                 onClick={() => toggleItem(item.id, item.checked)}
-                className={`cursor-pointer ${item.checked ? "line-through text-gray-400" : ""}`}
+                className={`cursor-pointer ${item.checked ? "line-through text-gray-400 dark:text-gray-500" : "text-gray-800 dark:text-gray-200"}`}
               >
                 {item.name} — {item.quantity}
               </div>
               <button
                 onClick={() => deleteItem(item.id)}
-                className="text-red-500 hover:text-red-700"
+                className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500"
               >
                 🗑
               </button>
