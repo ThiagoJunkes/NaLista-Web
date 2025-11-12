@@ -16,7 +16,7 @@ export default function ItemList({ list }) {
   }, [list.id]);
 
   async function addItem() {
-    if (!name.trim()) return;
+    if (!name.trim()) return toast.error("Digite um nome para o item!");
     try {
       const res = await api.post("/itens", { name, listId: list.id, quantity });
       setItems(prev => [...prev, res.data]);
